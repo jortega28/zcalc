@@ -2,7 +2,7 @@
 Title: zcalc
 Authors: Justin Ortega, Zachary D'Alessandro, Benjamin Kratz
 Date: July 2016
-Version: 1.0
+Version: 1.1
 Availability: https://github.com/jortega28/zcalc
 '''
 
@@ -12,7 +12,7 @@ import csv
 import os
 
 programName = "zcalc"
-version = "1.0"
+version = "1.1"
 commandlist = ["zsing", "exit", "commands", "help", "zmulti", "credits", "zbasic"]
 commandlist.sort()
 startypes = ["ab", "c", "rrab", "rrc"]
@@ -59,6 +59,11 @@ def zsing():
         stype = raw_input("What is the type of the stars? (ab or c)\n")
 
     filedir = raw_input("What is the name of the file?\n")
+    if filedir[0] == "'" and filedir[len(filedir)-1] == "'":
+        filedir = filedir[1:len(filedir)-1]
+    elif filedir[0] == '"' and filedir[len(filedir)-1] == '"':
+        filedir = filedir[1:len(filedir)-1]
+
     if os.path.isfile(filedir) is False:
         print("File Error: File was not found. Make sure that the file exist and that it is spelled correctly.")
         print("Operation Cancelled!")
@@ -99,6 +104,11 @@ def zsing():
 
 def zmulti():
     dir = raw_input("What is the path to the directory? (Additional directories will be ignored but all files will be parsed)\n")
+    dir = raw_input("What is the name of the file?\n")
+    if dir[0] == "'" and dir[len(dir)-1] == "'":
+        dir = dir[1:len(dir)-1]
+    elif dir[0] == '"' and dir[len(dir)-1] == '"':
+        filedir = dir[1:len(dir)-1]
     if os.path.isdir(dir) is False:
         print("Directory Error: Could not look through given directory. Check to make sure the name of the directory is correct and that you have \nappropriate permissions to access the given directory.")
         print("Operation Cancelled!")
@@ -126,34 +136,35 @@ def zmulti():
         return
     savefile = raw_input("Would you like to save the results to a file in the same directory? If yes specify the file name otherwise leave blank.\n")
     filetosaveto = ""
-    for root, dirs, files in os.walk(dir):
-        for file in files:
-            if file == savefile:
-                overwrite = ""
-                while overwrite != "yes" or overwrite != "no":
-                    overwrite = raw_input("That file name already exist. Do you wish to overwrite that file? (yes or no)\n")
-                    if overwrite == "yes":
-                        print("Ok. File will be overwritten.")
-                        try:
-                            filetosaveto = open(dir+savefile, "w")
-                            break
-                        except IOError as e:
-                            print("IOError: Unable to overwrite file...")
-                            print("Here's the full error...")
-                            print(e)
+    if savefile != "":
+        for root, dirs, files in os.walk(dir):
+            for file in files:
+                if file == savefile:
+                    overwrite = ""
+                    while overwrite != "yes" or overwrite != "no":
+                        overwrite = raw_input("That file name already exist. Do you wish to overwrite that file? (yes or no)\n")
+                        if overwrite == "yes":
+                            print("Ok. File will be overwritten.")
+                            try:
+                                filetosaveto = open(dir+savefile, "w")
+                                break
+                            except IOError as e:
+                                print("IOError: Unable to overwrite file...")
+                                print("Here's the full error...")
+                                print(e)
+                                print("Operation cancelled!")
+                                return
+                        elif overwrite == "no":
                             print("Operation cancelled!")
                             return
-                    elif overwrite == "no":
-                        print("Operation cancelled!")
-                        return
-        try:
-            filetosaveto = open(dir+savefile, "w")
-        except IOError as e:
-            print("IOError: Unable to create file...")
-            print("Here's the full error...")
-            print(e)
-            print("Operation cancelled!")
-            return
+            try:
+                filetosaveto = open(dir+savefile, "w")
+            except IOError as e:
+                print("IOError: Unable to create file...")
+                print("Here's the full error...")
+                print(e)
+                print("Operation cancelled!")
+                return
 
     validfiles = []
 
@@ -187,19 +198,22 @@ def zmulti():
                     i += 1
 
             z = calcZ(fouCombo(p1,p3), fo, stype)
-            filetosaveto.write("The metallicity of the file " + validfiles[j] + " is:\n")
-            filetosaveto.write(str(z)+"\n")
+            if filetosaveto != "":
+                filetosaveto.write("The metallicity of the file " + validfiles[j] + " is:\n")
+                filetosaveto.write(str(z)+"\n")
             print("The metallicity of the file " + validfiles[j] + " is:")
             print(str(z))
         except (ValueError, IOError, IndexError) as e:
             print("Read Error: Either the file " + validfiles[j] + " could not be opened or the data is not located where specified.")
             print("Here's the full error...")
             print(e)
-            filetosaveto.write("Skipping " + validfiles[j])
+            if filetosaveto != "":
+                filetosaveto.write("Skipping " + validfiles[j])
             print("Skipping " + validfiles[j])
         i = 0
         j += 1
-    filetosaveto.close()
+    if filetosaveto != "":
+        filetosaveto.close()
 
 def zbasic():
     stype = ""

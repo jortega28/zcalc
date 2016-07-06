@@ -27,5 +27,5 @@ A full description of these commands are shown below:
 	Title: zcalc
 	Authors: Justin Ortega, Zachary D'Alessandro, Benjamin Kratz
 	Date: July 2016
-	Version: 1.0
+	Version: 1.1
 	Availability: https://github.com/jortega28/zcalc
