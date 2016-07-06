@@ -3,7 +3,7 @@ Title: zcalc
 Authors: Justin Ortega, Zachary D'Alessandro, Benjamin Kratz
 Date: July 2016
 Version: 1.0
-Availability: www.github.com/...
+Availability: https://github.com/jortega28/zcalc
 '''
 
 import sys
@@ -51,7 +51,7 @@ def credits():
     print("Authors: Justin Ortega, Zachary D'Alessandro, Benjamin Kratz")
     print("Date: July 2016")
     print("Version: " + version)
-    print("Availability: www.github.com/...")
+    print("Availability: https://github.com/jortega28/zcalc")
 
 def zsing():
     stype = ""
