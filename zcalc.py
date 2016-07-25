@@ -104,7 +104,6 @@ def zsing():
 
 def zmulti():
     dir = raw_input("What is the path to the directory? (Additional directories will be ignored but all files will be parsed)\n")
-    dir = raw_input("What is the name of the file?\n")
     if dir[0] == "'" and dir[len(dir)-1] == "'":
         dir = dir[1:len(dir)-1]
     elif dir[0] == '"' and dir[len(dir)-1] == '"':
