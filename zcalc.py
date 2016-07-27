@@ -107,7 +107,7 @@ def zmulti():
     if dir[0] == "'" and dir[len(dir)-1] == "'":
         dir = dir[1:len(dir)-1]
     elif dir[0] == '"' and dir[len(dir)-1] == '"':
-        filedir = dir[1:len(dir)-1]
+        dir = dir[1:len(dir)-1]
     if os.path.isdir(dir) is False:
         print("Directory Error: Could not look through given directory. Check to make sure the name of the directory is correct and that you have \nappropriate permissions to access the given directory.")
         print("Operation Cancelled!")
