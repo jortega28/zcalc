@@ -2,7 +2,7 @@
 Title: zcalc
 Authors: Justin Ortega, Zachary D'Alessandro, Benjamin Kratz
 Date: July 2016
-Version: 1.1
+Version: 1.3
 Availability: https://github.com/jortega28/zcalc
 '''
 
@@ -12,7 +12,7 @@ import csv
 import os
 
 programName = "zcalc"
-version = "1.1"
+version = "1.3"
 commandlist = ["zsing", "exit", "commands", "help", "zmulti", "credits", "zbasic"]
 commandlist.sort()
 startypes = ["ab", "c", "rrab", "rrc"]
@@ -243,16 +243,18 @@ def fouCombo(p1, p3):
     #Fourier combination(31) calculation below
     fc = p3-(3.0*p1)
     pi2 = 2.0*math.pi
-    while fc >= pi2 or fc <= (-1.0*pi2):
+    while fc < 0 or fc >= pi2:
         if fc >= pi2:
             fc -= pi2
         else:
             fc += pi2
+    #print(str(fc))
     return fc
 
 def calcZ(fc, fo, stype):
     z = 0.0
     P = 1.0/fo
+    #print(str(P))
     #Calculation of metallicity
     if stype == "ab" or stype == "rrab":
         b0 = -8.65
