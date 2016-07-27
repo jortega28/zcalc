@@ -12,6 +12,7 @@ Once you are within the program you can type any of the following commands:
 	commands             zbasic
 	credits              zmulti
 	exit                 zsing
+	help
 
 A full description of these commands are shown below:
 
@@ -27,5 +28,5 @@ A full description of these commands are shown below:
 	Title: zcalc
 	Authors: Justin Ortega, Zachary D'Alessandro, Benjamin Kratz
 	Date: July 2016
-	Version: 1.1
+	Version: 1.3
 	Availability: https://github.com/jortega28/zcalc
